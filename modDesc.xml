@@ -1,4 +1,4 @@
-<modDesc descVersion="93">
+<modDesc descVersion="94">
 	<author>Fetty42</author>
 	<version>1.0.0.0</version>
 	<title>
@@ -9,19 +9,22 @@
         <de><![CDATA[Um das Spiel realistischer zu gestalten, wird durch diesen Mod die Anzahl der verschiedenen Fülltypen, die gleichzeitig in einem Silo gelagert werden können, begrenzt.
 Durch die Verwendung von Siloerweiterungen wird diese Anzahl erhöht.
 
-Für Fehlermeldungen oder Anregungen besucht bitte: https://github.com/Fetty42/FS22_SiloFilltypeLimiting]]></de>
+Für Fehlermeldungen oder Anregungen besucht bitte: https://github.com/Fetty42/FS25_SiloFilltypeLimiting/issues oder https://forum.giants-software.com/viewtopic.php?t=208708]]></de>
+
         <en><![CDATA[To make the game more realistic, this mod limits the number of different fill types that can be stored in a silo at the same time.
 By using silo extensions, this number is increased.
 
-For any error messages or suggestions, please visit: https://github.com/Fetty42/FS22_SiloFilltypeLimiting]]></en>
+For any error messages or suggestions, please visit: https://github.com/Fetty42/FS25_SiloFilltypeLimiting/issues or https://forum.giants-software.com/viewtopic.php?t=208708]]></en>
+
         <fr><![CDATA[Afin de rendre le jeu plus réaliste, ce mod limite le nombre de types de remplissage différents pouvant être stockés simultanément dans un silo.
 L'utilisation d'extensions de silo permet d'augmenter ce nombre.
 
-Pour les messages d'erreur ou les suggestions, veuillez visiter : https://github.com/Fetty42/FS22_SiloFilltypeLimiting]]></fr>
+Pour les messages d'erreur ou les suggestions, veuillez visiter : https://github.com/Fetty42/FS25_SiloFilltypeLimiting/issues ou https://forum.giants-software.com/viewtopic.php?t=208708]]></fr>
+
         <ru><![CDATA[Чтобы сделать игру более реалистичной, этот мод ограничивает количество различных типов заполнения, которые можно одновременно хранить в бункере.
 Используя расширения силоса, это число увеличивается.
 
-Для любых сообщений об ошибках или предложениях, пожалуйста, посетите: https://github.com/Fetty42/FS22_SiloFilltypeLimiting]]></ru>
+Для любых сообщений об ошибках или предложениях, пожалуйста, посетите: https://github.com/Fetty42/FS25_SiloFilltypeLimiting/issues или https://forum.giants-software.com/viewtopic.php?t=208708]]></ru>
     </description>
 
 	<iconFilename>icon_SiloFilltypeLimiting.dds</iconFilename>
@@ -32,22 +35,22 @@ Pour les messages d'erreur ou les suggestions, veuillez visiter : https://github
 
 	<l10n>
 		<text name="SiloFilltypeLimiting_UnloadingNotAllowed">
-			<de>Zu viele Fülltypen (%s/%s) --> Entladen ist nicht erlaubt</de>
-			<en>Too many filltypes (%s/%s) --> Unloading is not allowed</en>
-			<fr>Trop de types de remplissage (%s/%s) --> le déchargement n'est pas autorisé</fr>
-			<ru>Слишком много видов наполнителей (%s/%s) -> Разгрузка не возможна</ru>
+			<de>Zu viele Fülltypen (%s/%s in Benutzung) --> Entladen ist nicht erlaubt</de>
+			<en>Too many filltypes (%s/%s in use) --> Unloading is not allowed</en>
+			<fr>Trop de types de remplissage (%s/%s en usage) --> le déchargement n'est pas autorisé</fr>
+			<ru>Слишком много видов наполнителей (%s/%s в использовании) -> Разгрузка не возможна</ru>
 		</text>
 		<text name="SiloFilltypeLimiting_ExistingFiltype">
-			<de>Vorhandener Fülltyp (%s/%s)</de>
-			<en>Existing filetype (%s/%s)</en>
-			<fr>Type de remplissage existant (%s/%s)</fr>
-			<ru>Существующий тип заполнения (%s/%s)</ru>
+			<de>Vorhandener Fülltyp (%s/%s in Benutzung)</de>
+			<en>Existing filetype (%s/%s in use)</en>
+			<fr>Type de remplissage existant (%s/%s en usage)</fr>
+			<ru>Существующий тип заполнения (%s/%s в использовании)</ru>
 		</text>
 		<text name="SiloFilltypeLimiting_NewFilltype">
-			<de>Neuer Fülltyp (%s/%s)</de>
-			<en>New filetype (%s/%s)</en>
-			<fr>Nouveau type de remplissage (%s/%s)</fr>
-			<ru>Новый тип наполнения (%s/%s)</ru>
+			<de>Neuer Fülltyp (%s/%s in Benutzung)</de>
+			<en>New filetype (%s/%s in use)</en>
+			<fr>Nouveau type de remplissage (%s/%s en usage)</fr>
+			<ru>Новый тип наполнения (%s/%s^в использовании)</ru>
 		</text>
 	</l10n>
 </modDesc>

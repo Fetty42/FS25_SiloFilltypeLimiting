@@ -149,6 +149,7 @@ function StorageLimit.unloadingStation_getFreeCapacity(station, superFunc, fillT
 	or StorageLimit.timeOfLastNotification[farmId][station] == nil
 	or StorageLimit.timeOfLastNotification[farmId][station][fillTypeIndex] == nil
 	or g_currentMission.environment.dayTime/(1000*60) > StorageLimit.timeOfLastNotification[farmId][station][fillTypeIndex] + 6
+	or g_currentMission.environment.dayTime/(1000*60) < StorageLimit.timeOfLastNotification[farmId][station][fillTypeIndex]
 	then
 		-- dbPrintf(string.format("  dayTime=%s", tostring(g_currentMission.environment.dayTime/(1000*60))))
 		if StorageLimit.timeOfLastNotification[farmId] == nil then
@@ -202,22 +203,6 @@ function StorageLimit.unloadingStation_getFreeCapacity(station, superFunc, fillT
 				dbPrintf("  Target-Storagess: id=%s | capacity=%s", targetStorage.id, targetStorage.capacity)
 			end
 
-			-- current targetStorage debug output
-			-- if withOutput then
-			-- 	print("")
-			-- 	print("TargetStorage: " .. countTargetStorages)
-			-- 	print("**** DebugUtil.printTableRecursively() **********************************************************************************************")
-			-- 	DebugUtil.printTableRecursively(targetStorage,".",0,2)
-			-- 	print("**** End DebugUtil.printTableRecursively() ******************************************************************************************")
-			-- end
-
---            targetStorage.capacity
---            .fillLevels
---            .fillTypes
---            .isExtension
---            .unloadingStations
---            .id
-
 			for fillTypeIndex1, _ in pairs(targetStorage.fillTypes) do
 				local ftName = g_fillTypeManager:getFillTypeByIndex(fillTypeIndex1).name
 				if station:getFillLevel(fillTypeIndex1, farmId) > 0.1 and storedFillTypes[ftName] == nil then
@@ -236,6 +221,7 @@ function StorageLimit.unloadingStation_getFreeCapacity(station, superFunc, fillT
 
 	local notificationText = "";
 	local callSuperFunction = true
+	local isNotAllowed = false
 	if isFilltypeAlreadyInUse  then
 		-- The storage space for this fill type is already in use
 		if countStoredFillTypes <= maxStoredFillTypesOverAll then
@@ -261,6 +247,10 @@ function StorageLimit.unloadingStation_getFreeCapacity(station, superFunc, fillT
 	if withOutput and  notificationText ~= "" then
 		dbPrintf("  StorageLimit: countTargetStorages=%s | maxStoredFillTypesOverAll=%s | Msg=%s", countTargetStorages, maxStoredFillTypesOverAll, notificationText)
 		g_currentMission:addIngameNotification(FSBaseMission.INGAME_NOTIFICATION_OK, notificationText)
+		-- g_currentMission.hud:addSideNotification(FSBaseMission.INGAME_NOTIFICATION_OK, notificationText, 3000);
+		if not callSuperFunction then
+			g_currentMission:showBlinkingWarning(notificationText, 8000)
+		end
 	end
 	
 	if callSuperFunction then
