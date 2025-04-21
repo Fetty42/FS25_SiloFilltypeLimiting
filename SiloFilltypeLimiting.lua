@@ -1,6 +1,6 @@
 -- Author: Fetty42
--- Date: 29.01.2025
--- Version: 1.0.0.0
+-- Date: 21.04.2025
+-- Version: 1.0.1.0
 
 local dbPrintfOn = false
 local dbInfoPrintfOn = false
@@ -26,7 +26,7 @@ end
 local function dbPrintHeader(funcName)
 	if dbPrintfOn then
 		if g_currentMission ~=nil and g_currentMission.missionDynamicInfo ~=nil then
-			print(string.format("Call %s: isDedicatedServer=%s | isServer()=%s | isMasterUser=%s | isMultiplayer=%s | isClient()=%s | farmId=%s", 
+			print(string.format("Call %s: isDedicatedServer=%s | isServer()=%s | isMasterUser=%s | isMultiplayer=%s | isClient()=%s | farmId=%s",
 							funcName, tostring(g_dedicatedServer~=nil), tostring(g_currentMission:getIsServer()), tostring(g_currentMission.isMasterUser), tostring(g_currentMission.missionDynamicInfo.isMultiplayer), tostring(g_currentMission:getIsClient()), tostring(g_currentMission:getFarmId())))
 		else
 			print(string.format("Call %s: isDedicatedServer=%s | g_currentMission=%s",
@@ -39,11 +39,13 @@ end
 
 SiloFilltypeLimiting = {}; -- Class
 
+SiloFilltypeLimiting.settings = {}
+
 SiloFilltypeLimiting.timeOfLastNotification = {}
-SiloFilltypeLimiting.maxStoredFillTypesDefault = 4
-SiloFilltypeLimiting.maxStoredFillTypesExtensionDefault = 2
 SiloFilltypeLimiting.knownStorageStations = {}	-- StationName = maxStoredFillTypes
 SiloFilltypeLimiting.initDone = false
+SiloFilltypeLimiting.isInitSettingUI = false
+
 
 SiloFilltypeLimiting.directory = g_currentModDirectory
 SiloFilltypeLimiting.modName = g_currentModName
@@ -59,12 +61,83 @@ function SiloFilltypeLimiting:loadMap(name)
 	-- end
 	UnloadingStation.getFreeCapacity = Utils.overwrittenFunction(UnloadingStation.getFreeCapacity, SiloFilltypeLimiting.unloadingStation_getFreeCapacity)
 
-	-- Save Configuration when saving savegame
-	-- FSBaseMission.saveSavegame = Utils.appendedFunction(FSBaseMission.saveSavegame, SiloFilltypeLimiting.writeConfig)
+	InGameMenu.onMenuOpened = Utils.appendedFunction(InGameMenu.onMenuOpened, SiloFilltypeLimiting.initSettingUI)
+	FSBaseMission.saveSavegame = Utils.appendedFunction(FSBaseMission.saveSavegame, SiloFilltypeLimiting.saveSettings)
 
-	--load settings:
-	-- SiloFilltypeLimiting:readConfig();
+	SiloFilltypeLimiting:loadSettings()
 end
+
+
+function SiloFilltypeLimiting:defaultSettings()
+	dbPrintHeader("SiloFilltypeLimiting:defSettings")
+
+	SiloFilltypeLimiting.settings.maxNoParallelFillTypesPerSilo = 4
+	SiloFilltypeLimiting.settings.additionalNoParallelFillTypesPerSiloExtension = 2
+end
+
+
+function SiloFilltypeLimiting:saveSettings()
+	dbPrintHeader("SiloFilltypeLimiting:saveSettings")
+
+	local modSettingsDir = getUserProfileAppPath() .. "modSettings"
+	local fileName = "SiloFilltypeLimiting.xml"
+	local createXmlFile = modSettingsDir .. "/" .. fileName
+
+	local xmlFile = createXMLFile("SiloFilltypeLimiting", createXmlFile, "SiloFilltypeLimiting")
+	setXMLInt(xmlFile, "SiloFilltypeLimiting.settings#maxNoParallelFillTypesPerSilo",SiloFilltypeLimiting.settings.maxNoParallelFillTypesPerSilo)
+	setXMLInt(xmlFile, "SiloFilltypeLimiting.settings#additionalNoParallelFillTypesPerSiloExtension",SiloFilltypeLimiting.settings.additionalNoParallelFillTypesPerSiloExtension)
+	
+	saveXMLFile(xmlFile)
+	delete(xmlFile)
+end
+
+
+function SiloFilltypeLimiting:loadSettings()
+	dbPrintHeader("SiloFilltypeLimiting:loadSettings")
+	
+	local modSettingsDir = getUserProfileAppPath() .. "modSettings"
+	local fileName = "SiloFilltypeLimiting.xml"
+	local fileNamePath = modSettingsDir .. "/" .. fileName
+	
+	if fileExists(fileNamePath) then
+		local xmlFile = loadXMLFile("SiloFilltypeLimiting", fileNamePath)
+		
+		if xmlFile == 0 then
+			dbPrintf("  Could not read the data from XML file (%s), maybe the XML file is empty or corrupted, using the default!", fileNamePath)
+			SiloFilltypeLimiting:defaultSettings()
+			return
+		end
+
+		local maxNoParallelFillTypesPerSilo = getXMLInt(xmlFile, "SiloFilltypeLimiting.settings#maxNoParallelFillTypesPerSilo")
+		if maxNoParallelFillTypesPerSilo == nil or maxNoParallelFillTypesPerSilo == 0 then
+			dbPrintf("  Could not parse the correct 'maxNoParallelFillTypesPerSilo' value from the XML file, maybe it is corrupted, using the default!")
+			maxNoParallelFillTypesPerSilo = 4
+		end
+		SiloFilltypeLimiting.settings.maxNoParallelFillTypesPerSilo = maxNoParallelFillTypesPerSilo
+		
+		local additionalNoParallelFillTypesPerSiloExtension = getXMLInt(xmlFile, "SiloFilltypeLimiting.settings#additionalNoParallelFillTypesPerSiloExtension")
+		if additionalNoParallelFillTypesPerSiloExtension == nil then
+			dbPrintf("  Could not parse the correct 'additionalNoParallelFillTypesPerSiloExtension' value from the XML file, maybe it is corrupted, using the default!")
+			additionalNoParallelFillTypesPerSiloExtension = 2
+		end
+		SiloFilltypeLimiting.settings.additionalNoParallelFillTypesPerSiloExtension = additionalNoParallelFillTypesPerSiloExtension
+
+		delete(xmlFile)
+	else
+		SiloFilltypeLimiting:defaultSettings()
+		dbPrintf("  NOT any File founded!, using the default settings.")
+	end
+end
+
+
+function SiloFilltypeLimiting:initSettingUI()
+	if not SiloFilltypeLimiting.isInitSettingUI then
+		local uiSettings = SiloFilltypeLimitingUISettings.new(SiloFilltypeLimiting.settings,true)
+		uiSettings:registerSettings()
+		SiloFilltypeLimiting.isInitSettingUI = true
+	end
+end
+
 
 
 -- function SiloFilltypeLimiting:postLoadMap()
@@ -89,26 +162,26 @@ function SiloFilltypeLimiting:getAllStorageStations()
 	for _, station in pairs(g_currentMission.storageSystem.unloadingStations) do
 	
 		local placeable = station.owningPlaceable
-		local stationItentifier = SiloFilltypeLimiting:getStationItentifier(station)
+		local stationIdentifier = SiloFilltypeLimiting:getStationIdentifier(station)
 		dbPrintf("  - Station: Name=%s | typeName=%s | categoryName=%s | isSellingPoint=%s | hasStoragePerFarm=%s | ownerFarmId=%s",
-		stationItentifier, tostring(placeable.typeName), tostring(placeable.storeItem.categoryName), tostring(station.isSellingPoint), station.hasStoragePerFarm, placeable.ownerFarmId)
+		stationIdentifier, tostring(placeable.typeName), tostring(placeable.storeItem.categoryName), tostring(station.isSellingPoint), station.hasStoragePerFarm, placeable.ownerFarmId)
 
 		if SiloFilltypeLimiting:isStationRelevant(station) then
 			dbPrintf("    --> is relevant StorageStation")
 
-			if SiloFilltypeLimiting.knownStorageStations[stationItentifier] == nil then
-				dbPrintf("SiloFilltypeLimiting: New undefined storage station '%s'. Set max storage slots to %s (default)", stationItentifier, SiloFilltypeLimiting.maxStoredFillTypesDefault)
-				SiloFilltypeLimiting.knownStorageStations[stationItentifier] = -1
+			if SiloFilltypeLimiting.knownStorageStations[stationIdentifier] == nil then
+				dbPrintf("SiloFilltypeLimiting: New undefined storage station '%s'. Set max storage slots to %s (default)", stationIdentifier, SiloFilltypeLimiting.settings.maxNoParallelFillTypesPerSilo)
+				SiloFilltypeLimiting.knownStorageStations[stationIdentifier] = -1
 			end
 		end
 	end
 
 	-- Try to get more information for the owned storage extensions (e.g. mod name)
-	dbPrintf("")
-	dbPrintf("  Try to get more information for the owned storage extensions (e.g. mod name)")
-	for _, station in pairs(g_currentMission.storageSystem.storageExtensions) do
-        dbPrintf("    storageSystem.storageExtensions: id=%s | capacity=%s", station.id, station.capacity)
-	end
+	-- dbPrintf("")
+	-- dbPrintf("  Try to get more information for the owned storage extensions (e.g. mod name)")
+	-- for _, station in pairs(g_currentMission.storageSystem.storageExtensions) do
+    --     dbPrintf("    storageSystem.storageExtensions: id=%s | capacity=%s", station.id, station.capacity)
+	-- end
 	-- for _, station in pairs(g_currentMission.storageSystem.extendableLoadingStations) do
     --     print(tostring(station))
 	-- end
@@ -121,26 +194,16 @@ function SiloFilltypeLimiting:getAllStorageStations()
 end
 
 
-function SiloFilltypeLimiting:isStationRelevant(station, farmId)	-- farmId == nil --> all station, undependent of farmId
+function SiloFilltypeLimiting:isStationRelevant(station, farmId)	-- farmId == nil --> all station, independent of farmId
 	-- dbPrintHeader("SiloFilltypeLimiting:isStationRelevant()");
 	local placeable = station.owningPlaceable
 	
 	-- dbPrintf("  - Station: getName=%s | typeName=%s | categoryName=%s | isSellingPoint=%s | hasStoragePerFarm=%s | ownerFarmId=%s",
 	-- placeable:getName(), tostring(placeable.typeName), tostring(placeable.storeItem.categoryName), tostring(station.isSellingPoint), station.hasStoragePerFarm, placeable.ownerFarmId)
 
-	-- ~= PRODUCTIONPOINTS, ANIMALPENS
-	-- == SILOS
-	-- getName=Railroad Silo North | typeName=silo | categoryName=PLACEABLEMISC | isSellingPoint=nil | hasStoragePerFarm=true | ownerFarmId=0
-	-- getName=Farma 400 + Obi 1000 | typeName=silo | categoryName=SILOS | isSellingPoint=nil | hasStoragePerFarm=false | ownerFarmId=1			--> is own relevant StorageStation
-	-- getName=Medium Petrol Tank | typeName=silo | categoryName=DIESELTANKS | isSellingPoint=nil | hasStoragePerFarm=false | ownerFarmId=1 	--> is own relevant StorageStation
-	-- getName=Liquidmanure Tank | typeName=silo | categoryName=SILOS | isSellingPoint=nil | hasStoragePerFarm=false | ownerFarmId=1 			--> is own relevant StorageStation
-
 	if ((station.isSellingPoint == nil or station.isSellingPoint == false) and (farmId == nil or placeable.ownerFarmId == farmId)) then
-        if ((placeable.storeItem.categoryName == "SILOS" or placeable.storeItem.categoryName == "STORAGES") and placeable.typeName == "silo")
-            or (placeable.typeName == "FS22_HofBergmann.mapSiloSystem")
-            or (placeable.typeName == "FS22_Franconian_Farm.chickenHusbandrySilo") then
-		-- placeable.storeItem.categoryName ~= "ANIMALPENS" and placeable.storeItem.categoryName ~= "PRODUCTIONPOINTS"
-		-- dbPrintf("    --> is own relevant StorageStation")
+        if ((placeable.storeItem.categoryName == "SILOS" or placeable.storeItem.categoryName == "STORAGES") and placeable.typeName == "silo") or placeable.spec_silo ~= nil then
+			-- dbPrintf("    --> is own relevant StorageStation")
             return true
         end
 	end
@@ -190,19 +253,19 @@ function SiloFilltypeLimiting.unloadingStation_getFreeCapacity(station, superFun
 		dbPrintf("  Station: getName=%s | typeName=%s | categoryName=%s", station.owningPlaceable:getName(), station.owningPlaceable.typeName, station.owningPlaceable.storeItem.categoryName)
 	end
 
-	local maxStoredFillTypes = SiloFilltypeLimiting.maxStoredFillTypesDefault
-	local stationIdentifier = SiloFilltypeLimiting:getStationItentifier(station)
+	local maxStoredFillTypes = SiloFilltypeLimiting.settings.maxNoParallelFillTypesPerSilo
+	local stationIdentifier = SiloFilltypeLimiting:getStationIdentifier(station)
 
 
 	if SiloFilltypeLimiting.knownStorageStations[stationIdentifier] == nil then
-		dbPrintf("SiloFilltypeLimiting: New undefined storage station '%s'. Set max storage slots to %s (default)", stationIdentifier, SiloFilltypeLimiting.maxStoredFillTypesDefault)
+		dbPrintf("SiloFilltypeLimiting: New undefined storage station '%s'. Set max storage slots to %s (default)", stationIdentifier, SiloFilltypeLimiting.settings.maxNoParallelFillTypesPerSilo)
 		SiloFilltypeLimiting.knownStorageStations[stationIdentifier] = -1
 	else		
 		maxStoredFillTypes = SiloFilltypeLimiting.knownStorageStations[stationIdentifier]
 		if maxStoredFillTypes == -1 then
-			maxStoredFillTypes = SiloFilltypeLimiting.maxStoredFillTypesDefault
+			maxStoredFillTypes = SiloFilltypeLimiting.settings.maxNoParallelFillTypesPerSilo
 			if withOutput then
-				dbPrintf("SiloFilltypeLimiting: Undefined storage station '%s'. Set max storage slots to %s (default)", stationIdentifier, SiloFilltypeLimiting.maxStoredFillTypesDefault)
+				dbPrintf("SiloFilltypeLimiting: Undefined storage station '%s'. Set max storage slots to %s (default)", stationIdentifier, SiloFilltypeLimiting.settings.maxNoParallelFillTypesPerSilo)
 			end
 		else
 			if withOutput then
@@ -220,7 +283,7 @@ function SiloFilltypeLimiting.unloadingStation_getFreeCapacity(station, superFun
             countTargetStorages = countTargetStorages + 1
 
 			if withOutput then
-				dbPrintf("  Target-Storagess: id=%s | capacity=%s", targetStorage.id, targetStorage.capacity)
+				dbPrintf("  Target-Storage: id=%s | capacity=%s", targetStorage.id, targetStorage.capacity)
 			end
 
 			for fillTypeIndex1, _ in pairs(targetStorage.fillTypes) do
@@ -236,7 +299,7 @@ function SiloFilltypeLimiting.unloadingStation_getFreeCapacity(station, superFun
 		end
 	end
 
-    local maxStoredFillTypesOverAll = maxStoredFillTypes + (countTargetStorages-1) * SiloFilltypeLimiting.maxStoredFillTypesExtensionDefault
+    local maxStoredFillTypesOverAll = maxStoredFillTypes + (countTargetStorages-1) * SiloFilltypeLimiting.settings.additionalNoParallelFillTypesPerSiloExtension
 	local isFilltypeAlreadyInUse = station:getFillLevel(fillTypeIndex, farmId) > 0.1
 
 	local notificationText = "";
@@ -247,7 +310,7 @@ function SiloFilltypeLimiting.unloadingStation_getFreeCapacity(station, superFun
 		if countStoredFillTypes <= maxStoredFillTypesOverAll then
 			if withOutput then
 				dbPrintf("  The filltype is already in use --> Unloading is allowed. Storage slots in use %s/%s", countStoredFillTypes, maxStoredFillTypesOverAll)
-				notificationText = string.format(g_i18n:getText("SiloFilltypeLimiting_ExistingFiltype"), countStoredFillTypes, maxStoredFillTypesOverAll)
+				notificationText = string.format(g_i18n:getText("SiloFilltypeLimiting_ExistingFilltype"), countStoredFillTypes, maxStoredFillTypesOverAll)
 			end
 		else
 			notificationText = string.format(g_i18n:getText("SiloFilltypeLimiting_UnloadingNotAllowed"), countStoredFillTypes, maxStoredFillTypesOverAll)
@@ -268,7 +331,7 @@ function SiloFilltypeLimiting.unloadingStation_getFreeCapacity(station, superFun
 	-- info output, but not every call
 	if withOutput and  notificationText ~= "" then
 		dbPrintf("  SiloFilltypeLimiting: countTargetStorages=%s | maxStoredFillTypesOverAll=%s | Msg=%s", countTargetStorages, maxStoredFillTypesOverAll, notificationText)
-		g_currentMission:addIngameNotification(FSBaseMission.INGAME_NOTIFICATION_OK, notificationText)
+		g_currentMission:addIngameNotification(callSuperFunction and FSBaseMission.INGAME_NOTIFICATION_OK or FSBaseMission.INGAME_NOTIFICATION_CRITICAL, notificationText)
 		-- g_currentMission.hud:addSideNotification(FSBaseMission.INGAME_NOTIFICATION_OK, notificationText, 3000);
 		if not callSuperFunction then
 			g_currentMission:showBlinkingWarning(notificationText, 8000)
@@ -284,88 +347,8 @@ function SiloFilltypeLimiting.unloadingStation_getFreeCapacity(station, superFun
 end
 
 
--- function SiloFilltypeLimiting:saveSavegame()
--- 	dbPrintHeader("SiloFilltypeLimiting:saveSavegame")
-
--- 	SiloFilltypeLimiting:writeConfig();
--- end;
-
-
--- function SiloFilltypeLimiting:writeConfig()
--- 	dbPrintHeader("SiloFilltypeLimiting:writeConfig")
-
--- 	-- skip on dedicated servers
--- 	if g_dedicatedServerInfo ~= nil then
--- 		return
--- 	end
-	
--- 	createFolder(SiloFilltypeLimiting.confDirectory);
-
--- 	local fileName = SiloFilltypeLimiting.confDirectory .. SiloFilltypeLimiting.modName .. ".xml"
--- 	local key = "SiloFilltypeLimiting";
--- 	local xmlFile = createXMLFile(key, fileName, key);		
-
--- 	if xmlFile > 0 then
--- 		setXMLString(xmlFile, key.."#XMLFileVersion", "1.0");
-
--- 		local settingKey = string.format("%s.Settings", key)
--- 		setXMLInt(xmlFile, settingKey..".maxStoredFillTypesDefault", SiloFilltypeLimiting.maxStoredFillTypesDefault)
--- 		setXMLInt(xmlFile, settingKey..".maxStoredFillTypesExtensionDefault", SiloFilltypeLimiting.maxStoredFillTypesExtensionDefault)
-
--- 		local i = 0
--- 		for stationName, maxStoredFillTypes in pairs(SiloFilltypeLimiting.knownStorageStations) do
--- 			local posKey = string.format("%s.StorageStations.StationName(%d)", key, i)
--- 			setXMLString(xmlFile, posKey.."#stationName", stationName)
--- 			setXMLInt(xmlFile, posKey.."#maxStoredFillTypes", maxStoredFillTypes)
--- 			i = i + 1
--- 		end
-
--- 		saveXMLFile(xmlFile)
--- 		delete(xmlFile)
--- 	end
--- end
-
-
--- function SiloFilltypeLimiting:readConfig()
--- 	dbPrintHeader("SiloFilltypeLimiting:readConfig")
-
--- 	-- skip on dedicated servers
--- 	-- if g_dedicatedServerInfo ~= nil then
--- 	-- 	return
--- 	-- end
-
--- 	local fileName = SiloFilltypeLimiting.confDirectory .. SiloFilltypeLimiting.modName .. ".xml"
--- 	local key = "SiloFilltypeLimiting";
--- 	if fileExists(fileName) then
--- 		-- load existing XML file
--- 		local xmlFile = loadXMLFile(key, fileName, key)
-
--- 		local XMLFileVersion = getXMLString(xmlFile, key.."#XMLFileVersion")
--- 		if XMLFileVersion == "1.0" then
-
--- 			local settingKey = string.format("%s.Settings", key)
--- 			SiloFilltypeLimiting.maxStoredFillTypesDefault = Utils.getNoNil(getXMLInt(xmlFile, settingKey..".maxStoredFillTypesDefault"), SiloFilltypeLimiting.maxStoredFillTypesDefault)
--- 			SiloFilltypeLimiting.maxStoredFillTypesExtensionDefault = Utils.getNoNil(getXMLInt(xmlFile, settingKey..".maxStoredFillTypesExtensionDefault"), SiloFilltypeLimiting.maxStoredFillTypesExtensionDefault)
-
--- 			local i = 0
--- 			while true do
--- 				local posKey = string.format("%s.StorageStations.StationName(%d)", key, i)
--- 				if hasXMLProperty(xmlFile, posKey) then
--- 					local stationName = getXMLString(xmlFile, posKey.."#stationName")
--- 					local maxStoredFillTypes= getXMLInt(xmlFile, posKey.."#maxStoredFillTypes")
--- 					SiloFilltypeLimiting.knownStorageStations[stationName] = maxStoredFillTypes
--- 					i = i + 1
--- 				else
--- 					break
--- 				end
--- 			end
--- 		end
--- 	end
--- end
-
-
-function SiloFilltypeLimiting:getStationItentifier(station)
-	-- dbPrintHeader("SiloFilltypeLimiting:getStationItentifier")
+function SiloFilltypeLimiting:getStationIdentifier(station)
+	-- dbPrintHeader("SiloFilltypeLimiting:getStationIdentifier")
     -- local placeableTitle = station.owningPlaceable:getName()
 
     local placeableCustomEnvironment = station.owningPlaceable.customEnvironment
@@ -382,28 +365,10 @@ function SiloFilltypeLimiting:getStationItentifier(station)
 end
 
 
--- function SiloFilltypeLimiting:init()
--- 	dbPrintHeader("SiloFilltypeLimiting:init")
--- 	local fileName = SiloFilltypeLimiting.confDirectory .. SiloFilltypeLimiting.modName .. ".xml"
--- 	if not fileExists(fileName) then
--- 		SiloFilltypeLimiting:writeConfig()
--- 	end
--- end
-
--- station.owningPlaceable.baseDirectory
--- station.owningPlaceable.configFileName
--- station.owningPlaceable.customEnvironment
--- C:/Users/Dirk/Documents/My Games/FarmingSimulator2022/pdlc/premiumExpansion/
--- C:/Users/Dirk/Documents/My Games/FarmingSimulator2022/pdlc/premiumExpansion/placeables/sellingPoints/railroadStorageSilo01/railroadStorageSilo01.xml
--- pdlc_premiumExpansion
-
-
 -- function SiloFilltypeLimiting:onLoad(savegame)end;
 -- function SiloFilltypeLimiting:onUpdate(dt)end;
 -- function SiloFilltypeLimiting:deleteMap()end;
 -- function SiloFilltypeLimiting:keyEvent(unicode, sym, modifier, isDown)end;
 -- function SiloFilltypeLimiting:mouseEvent(posX, posY, isDown, isUp, button)end;
-
--- SiloFilltypeLimiting:init()
 
 
