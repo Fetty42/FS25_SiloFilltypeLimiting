@@ -1,4 +1,4 @@
-<modDesc descVersion="97">
+<modDesc descVersion="99">
 	<author>Fetty42</author>
 	<version>1.0.1.0</version>
 	<title>
@@ -6,57 +6,57 @@
         <en>Silo Filltype Limiting</en>
     </title>
     <description>
-        <de><![CDATA[Um das Spiel realistischer zu gestalten, wird durch diesen Mod die Anzahl der verschiedenen Fülltypen, die gleichzeitig in einem Silo gelagert werden können, begrenzt.
-Durch die Verwendung von Siloerweiterungen wird diese Anzahl erhöht.
-In einem Silo können jetzt nur noch maximal 4 verschiedene Fülltypen gelagert werden. Durch den Bau von zusätzlichen Siloerweiterungen kann die Anzahl der verschiedenen Fülltypen um jeweils 2 erhöht werden.
-Die vorgegebene Anzahl der Fülltypen, die in einem Silo bzw. in einer Siloerweiterung gelagert werden können, kann in den generellen Spieleinstellungen konfiguriert werden.
+        <de><![CDATA[Mehr Realismus auf deinem Hof: Silo-Fülltyp-Begrenzung
+Dieser Mod bringt eine neue Ebene der Realität in den Landwirtschaftssimulator. Ab sofort ist die Anzahl der verschiedenen Fülltypen, die du gleichzeitig in einem Silo lagern kannst, begrenzt. Standardmäßig sind es maximal drei verschiedene Fülltypen pro Silo - sicherlich immer noch nicht 100 % realistisch, aber schon eher so, wie es auf echten Höfen üblich ist.
+Doch keine Sorge: Wer clever plant und investiert, kann diese Begrenzung erweitern. Mit jeder gebauten Siloerweiterung erhöht sich die Anzahl der möglichen Fülltypen um eins. So bleibt dein Lager flexibel und wächst mit deinen Anforderungen.
+Ein weiteres Plus: Die maximale Anzahl der Fülltypen pro Silo und Erweiterung ist direkt in den allgemeinen Spieleinstellungen individuell anpassbar. Passe das System an deinen Spielstil an und bringe deine Hofverwaltung auf ein neues Level!
 
 Funktioniert jetzt auch im Multiplayer!
 
 Changelog 1.0.1.0:
-- Bessere Erkennung relevanter Silos (klappt jetzt auch für "Hof Bergmann")
-- Die Anzahl der Fülltypen für das Hauptsilo wie auch für eine Siloerweiterung kann jetzt in den generellen Spieleinstellungen konfiguriert werden.
+- Bessere Erkennung relevanter Silos (funktioniert jetzt auch für „Hof Bergmann”)
+- Die Anzahl der gleichzeitigen Fülltypen für das Hauptsilo sowie für eine Siloerweiterung kann jetzt in den generellen Spieleinstellungen konfiguriert werden.
 
-Für Fehlermeldungen oder Anregungen besucht bitte: https://github.com/Fetty42/FS25_SiloFilltypeLimiting/issues oder https://forum.giants-software.com/viewtopic.php?t=208708]]></de>
+Bei Fehlermeldungen oder Anregungen besuche bitte:  https://github.com/Fetty42/FS25_SiloFilltypeLimiting/issues oder https://forum.giants-software.com/viewtopic.php?t=208708]]></de>
 
-        <en><![CDATA[To make the game more realistic, this mod limits the number of different fill types that can be stored in a silo at the same time.
-By using silo extensions, this number is increased.
-In a silo, only a maximum of 4 different fill types can now be stored. By building additional silo extensions, the number of different fill types can be increased by 2 each.
-The default number of fill types that can be stored in a silo or in a silo extension can be configured in the general game settings.
+        <en><![CDATA[More Realism on Your Farm: Silo Filltype Limiting
+This mod adds a new level of realism to Farming Simulator. From now on, the number of different fill types you can store in a single silo is limited. By default, each silo can hold up to three different fill types - still not 100% realistic, but much closer to how things work on real farms.
+But don’t worry: smart planning and a bit of investment can lift this limit. Each built silo extension increases the number of allowed fill types by one. This keeps your storage flexible and able to grow with your needs.
+Another great feature: the maximum number of fill types per silo and extension can be individually adjusted in the general game settings. Customize the system to match your playstyle and take your farm management to the next level!
 
-Now also works in multiplayer!
-
-Changelog 1.0.1.0:
-- Better detection of relevant silos (now works for "Hof Bergmann" as well)
-- The number of fill types for the main silo as well as for a silo extension can now be configured in the general game settings.
-
-For any error messages or suggestions, please visit: https://github.com/Fetty42/FS25_SiloFilltypeLimiting/issues or https://forum.giants-software.com/viewtopic.php?t=208708]]></en>
-
-        <fr><![CDATA[Afin de rendre le jeu plus réaliste, ce mod limite le nombre de types de remplissage différents pouvant être stockés simultanément dans un silo.
-L'utilisation d'extensions de silo permet d'augmenter ce nombre.
-Dans un silo, seuls un maximum de 4 types de remplissage différents peuvent désormais être stockés. En construisant des extensions de silo supplémentaires, le nombre de types de remplissage différents peut être augmenté de 2 chacun.
-Le nombre par défaut de types de remplissage pouvant être stockés dans un silo ou dans une extension de silo peut être configuré dans les paramètres généraux du jeu.
-
-Fonctionne maintenant également en multijoueur !
+Now also compatible with multiplayer!
 
 Changelog 1.0.1.0:
-- Meilleure détection des silos pertinents (fonctionne maintenant aussi pour "Hof Bergmann")
-- Le nombre de types de remplissage pour le silo principal ainsi que pour une extension de silo peut désormais être configuré dans les paramètres généraux du jeu.
+- Improved detection of relevant silos (now works with “Hof Bergmann” map)
+- The number of simultaneous fill types for the main silo and each extension can now be configured in the general game settings
 
-Pour les messages d'erreur ou les suggestions, veuillez visiter : https://github.com/Fetty42/FS25_SiloFilltypeLimiting/issues ou https://forum.giants-software.com/viewtopic.php?t=208708]]></fr>
+For bug reports or suggestions, please visit: https://github.com/Fetty42/FS25_SiloFilltypeLimiting/issues or https://forum.giants-software.com/viewtopic.php?t=208708]]></en>
 
-        <ru><![CDATA[Чтобы сделать игру более реалистичной, этот мод ограничивает количество различных типов заполнения, которые можно одновременно хранить в бункере.
-Используя расширения силоса, это число увеличивается.
-Теперь в бункере можно хранить только максимум 4 различных типа заполнения. Построив дополнительные расширения силоса, количество различных типов заполнения можно увеличить на 2 каждый.
-Количество типов заполнения, которые можно хранить в бункере или в расширении бункера, можно настроить в общих настройках игры.
+        <fr><![CDATA[Plus de réalisme sur ta ferme : Limitation des types de remplissage du silo
+Ce mod apporte une nouvelle dimension de réalisme à Farming Simulator. Désormais, le nombre de types de remplissage différents que tu peux stocker simultanément dans un silo est limité. Par défaut, un silo peut contenir au maximum trois types de remplissage différents - ce n’est certes pas encore 100 % réaliste, mais c’est déjà bien plus proche de la réalité des exploitations agricoles.
+Pas d’inquiétude : ceux qui planifient intelligemment et investissent peuvent lever cette limitation. Chaque extension de silo construite augmente d’un le nombre de types de remplissage autorisés. Ainsi, ton stockage reste flexible et s’adapte à tes besoins croissants.
+Autre avantage : le nombre maximal de types de remplissage par silo et par extension est entièrement personnalisable dans les paramètres généraux du jeu. Adapte le système à ton style de jeu et fais passer la gestion de ta ferme au niveau supérieur!
 
-Теперь также работает в многопользовательском режиме!
+Fonctionne désormais aussi en multijoueur!
 
 Changelog 1.0.1.0:
-- Улучшенное обнаружение соответствующих силосов (теперь работает и для "Hof Bergmann")
-Количество типов заполнения для основного силоса, а также для расширения силоса теперь можно настроить в общих настройках игры.
+- Meilleure détection des silos concernés (fonctionne maintenant aussi avec la carte “Hof Bergmann”)
+- Le nombre de types de remplissage simultanés pour le silo principal et les extensions peut maintenant être configuré dans les paramètres généraux du jeu
 
-Для любых сообщений об ошибках или предложениях, пожалуйста, посетите: https://github.com/Fetty42/FS25_SiloFilltypeLimiting/issues или https://forum.giants-software.com/viewtopic.php?t=208708]]></ru>
+Pour signaler un bug ou faire une suggestion, rends-toi sur: https://github.com/Fetty42/FS25_SiloFilltypeLimiting/issues ou https://forum.giants-software.com/viewtopic.php?t=208708]]></fr>
+
+        <ru><![CDATA[Больше реализма на вашей ферме: Ограничение типов наполнения силоса
+Этот мод добавляет новый уровень реализма в Farming Simulator. Отныне количество различных типов наполнения, которые можно одновременно хранить в одном силосе, ограничено. По умолчанию в одном силосе можно хранить максимум три разных типа наполнения — возможно, это всё ещё не на 100 % реалистично, но уже гораздо ближе к тому, как это происходит на настоящих фермах.
+Не беспокойтесь: те, кто грамотно планирует и инвестирует, могут расширить это ограничение. Каждое построенное расширение силоса увеличивает допустимое количество типов наполнения на один. Таким образом, ваше хранилище остаётся гибким и может расти вместе с вашими потребностями.
+Ещё один плюс: максимальное количество типов наполнения для основного силоса и расширений можно индивидуально настроить в общих настройках игры. Настройте систему под свой стиль игры и выведите управление фермой на новый уровень!
+
+Теперь работает и в мультиплеере!
+
+Changelog 1.0.1.0:
+- Улучшено распознавание соответствующих силосов (теперь также работает с картой «Hof Bergmann»)
+- Количество одновременно хранимых типов наполнения для основного силоса и расширений теперь можно настроить в общих настройках игры
+
+Если у вас есть ошибки или предложения, посетите: https://github.com/Fetty42/FS25_SiloFilltypeLimiting/issues или https://forum.giants-software.com/viewtopic.php?t=208708]]></ru>
     </description>
 
 	<iconFilename>icon_SiloFilltypeLimiting.dds</iconFilename>

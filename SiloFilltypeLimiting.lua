@@ -71,8 +71,8 @@ end
 function SiloFilltypeLimiting:defaultSettings()
 	dbPrintHeader("SiloFilltypeLimiting:defSettings")
 
-	SiloFilltypeLimiting.settings.maxNoParallelFillTypesPerSilo = 4
-	SiloFilltypeLimiting.settings.additionalNoParallelFillTypesPerSiloExtension = 2
+	SiloFilltypeLimiting.settings.maxNoParallelFillTypesPerSilo = 3
+	SiloFilltypeLimiting.settings.additionalNoParallelFillTypesPerSiloExtension = 1
 end
 
 
@@ -307,15 +307,9 @@ function SiloFilltypeLimiting.unloadingStation_getFreeCapacity(station, superFun
 	local isNotAllowed = false
 	if isFilltypeAlreadyInUse  then
 		-- The storage space for this fill type is already in use
-		if countStoredFillTypes <= maxStoredFillTypesOverAll then
-			if withOutput then
-				dbPrintf("  The filltype is already in use --> Unloading is allowed. Storage slots in use %s/%s", countStoredFillTypes, maxStoredFillTypesOverAll)
-				notificationText = string.format(g_i18n:getText("SiloFilltypeLimiting_ExistingFilltype"), countStoredFillTypes, maxStoredFillTypesOverAll)
-			end
-		else
-			notificationText = string.format(g_i18n:getText("SiloFilltypeLimiting_UnloadingNotAllowed"), countStoredFillTypes, maxStoredFillTypesOverAll)
-			dbPrintf(notificationText)
-			callSuperFunction = false
+		if withOutput then
+			dbPrintf("  The filltype is already in use --> Unloading is allowed. Storage slots in use %s/%s", countStoredFillTypes, maxStoredFillTypesOverAll)
+			notificationText = string.format(g_i18n:getText("SiloFilltypeLimiting_ExistingFilltype"), countStoredFillTypes, maxStoredFillTypesOverAll)
 		end
 	elseif countStoredFillTypes < maxStoredFillTypesOverAll then
 		if withOutput then
