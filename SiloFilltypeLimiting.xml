@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<SiloFilltypeLimiting version="2">
+    <settings maxNumParallelFillTypesPerSilo="3" additionalNumParallelFillTypesPerSiloExtension="1" useConfiguredSettingsPerSilo="false"/>
+    <knownStorageStations identifier="data/placeables/mapAS/grainSilo/grainSiloSmallDouble.xml" maxNumParallelFillTypesPerSilo="2"/>
+    <knownStorageStations identifier="data/placeables/meridian/flatBottomBin3609/flatBottomBin3609.xml" maxNumParallelFillTypesPerSilo="1"/>
+    <knownStorageStations identifier="data/placeables/agi/commBin48/commBin48.xml" maxNumParallelFillTypesPerSilo="2"/>
+    <knownStorageStations identifier="data/placeables/unia/farma/farma500/farma500.xml" maxNumParallelFillTypesPerSilo="2"/>
+    <knownStorageStations identifier="data/placeables/meridian/flatBottomBin3608/flatBottomBin3608.xml" maxNumParallelFillTypesPerSilo="1"/>
+    <knownStorageStations identifier="data/placeables/agi/hopperBin1805/hopperBin1805.xml" maxNumParallelFillTypesPerSilo="1"/>
+    <knownStorageStations identifier="data/placeables/neuero/nl1622_6000/nl1622_6000.xml" maxNumParallelFillTypesPerSilo="3"/>
+    <knownStorageStations identifier="data/placeables/neuero/nl1622_16000/nl1622_16000.xml" maxNumParallelFillTypesPerSilo="8"/>
+    <knownStorageStations identifier="data/placeables/neuero/nl1622_2000/nl1622_2000.xml" maxNumParallelFillTypesPerSilo="1"/>
+    <knownStorageStations identifier="data/placeables/mapAS/grainSiloBricksAS/grainSiloBricksAS.xml" maxNumParallelFillTypesPerSilo="1"/>
+    <knownStorageStations identifier="data/placeables/unia/farma/farma400/farma400.xml" maxNumParallelFillTypesPerSilo="2"/>
+    <knownStorageStations identifier="data/placeables/mapAS/grainSilo/grainSiloSmall.xml" maxNumParallelFillTypesPerSilo="1"/>
+    <knownStorageStations identifier="data/placeables/mapUS/sellingPoints/grainElevatorTriggers/grainElevatorTriggers.xml" maxNumParallelFillTypesPerSilo="2"/>
+    <knownStorageStations identifier="data/placeables/mapAS/grainSilo/grainSilo.xml" maxNumParallelFillTypesPerSilo="1"/>
+    <knownStorageStations identifier="data/placeables/agi/flatBottomBin3605/flatBottomBin3605.xml" maxNumParallelFillTypesPerSilo="1"/>
+    <knownStorageStations identifier="data/placeables/mapUS/farmSilo/farmSilo.xml" maxNumParallelFillTypesPerSilo="2"/>
+    <knownStorageStations identifier="data/placeables/unia/farma/farma800/farma800.xml" maxNumParallelFillTypesPerSilo="4"/>
+    <knownStorageStations identifier="data/placeables/agi/smoothwallBin/smoothwallBin.xml" maxNumParallelFillTypesPerSilo="1"/>
+    <knownSiloExtensions identifier="data/placeables/unia/farma/farma150/farma150.xml" additionalNumParallelFillTypesPerSiloExtension="1"/>
+    <knownSiloExtensions identifier="data/placeables/mapAS/grainSilo/grainSiloSmallExtension.xml" additionalNumParallelFillTypesPerSiloExtension="1"/>
+    <knownSiloExtensions identifier="data/placeables/mapAS/grainSilo/grainSiloExtension.xml" additionalNumParallelFillTypesPerSiloExtension="1"/>
+    <knownSiloExtensions identifier="data/placeables/mapAS/grainSiloBricksAS/grainSiloBricksASExtension.xml" additionalNumParallelFillTypesPerSiloExtension="1"/>
+    <knownSiloExtensions identifier="data/placeables/unia/farma/farma200/farma200.xml" additionalNumParallelFillTypesPerSiloExtension="1"/>
+    <knownSiloExtensions identifier="data/placeables/unia/farma/farma100/farma100.xml" additionalNumParallelFillTypesPerSiloExtension="1"/>
+    <knownSiloExtensions identifier="data/placeables/unia/farma/farma250/farma250.xml" additionalNumParallelFillTypesPerSiloExtension="1"/>
+</SiloFilltypeLimiting>
