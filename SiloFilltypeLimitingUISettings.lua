@@ -1,6 +1,6 @@
 -- Author: Fetty42
--- Date: 02.03.2025
--- Version: 1.0.0.0
+-- Version: 1.1.0.0
+-- Date: 01.06.2026
 
 SiloFilltypeLimitingUISettings = {}
 ---@class SiloFilltypeLimitingUISettings

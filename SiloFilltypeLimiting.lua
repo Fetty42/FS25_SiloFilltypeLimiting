@@ -1,6 +1,6 @@
 -- Author: Fetty42
--- Date: 21.04.2025
--- Version: 1.0.1.0
+-- Version: 1.1.0.0
+-- Date: 01.06.2026
 
 local dbPrintfOn = false
 local dbInfoPrintfOn = false
