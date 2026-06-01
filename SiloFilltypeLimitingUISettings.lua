@@ -3,12 +3,13 @@
 -- Version: 1.0.0.0
 
 SiloFilltypeLimitingUISettings = {}
+---@class SiloFilltypeLimitingUISettings
 
 -- Create a meta table to get basic Class-like behavior
 local SiloFilltypeLimitingUISettings_mt = Class(SiloFilltypeLimitingUISettings)
 
 ---Creates the settings UI object
----@return SettingsUI @The new object
+---@return SiloFilltypeLimitingUISettings @The new object
 function SiloFilltypeLimitingUISettings.new(settings, debug)
     local self = setmetatable({}, SiloFilltypeLimitingUISettings_mt)
 
@@ -27,8 +28,9 @@ function SiloFilltypeLimitingUISettings:registerSettings()
     -- Define the UI controls. For each control, a <prefix>_<name>_short and _long key must exist in the i18n values
     local controlProperties =
     {
-        { name = "maxNoParallelFillTypesPerSilo",                   autoBind = true, nillable = false, min = 1, max = 20, step = 1 },
-        { name = "additionalNoParallelFillTypesPerSiloExtension",   autoBind = true, nillable = false, min = 0, max = 10, step = 1 }
+        { name = "maxNumParallelFillTypesPerSilo",                   autoBind = true, nillable = false, min = 1, max = 20, step = 1 },
+        { name = "additionalNumParallelFillTypesPerSiloExtension",   autoBind = true, nillable = false, min = 0, max = 10, step = 1 },
+        { name = "useConfiguredSettingsPerSilo",                    autoBind = true, nillable = false }
     }
 
     UIHelper.createControlsDynamically(settingsPage, "UISetting_title", self, controlProperties, "UISetting_")
@@ -42,10 +44,7 @@ function SiloFilltypeLimitingUISettings:registerSettings()
         self:updateUiElements(true) -- We can skip autobind controls here since they are already registered to onFrameOpen
     end)
 	
-	-- Trigger to update the values when settings frame is closed
-	InGameMenuSettingsFrame.onFrameClose = Utils.appendedFunction(InGameMenuSettingsFrame.onFrameClose, function()
-		self:onFrameClose();
-   	end);
+
 end
 
 
@@ -72,9 +71,3 @@ function SiloFilltypeLimitingUISettings:updateUiElements(skipAutoBindControls)
     settingsPage.generalSettingsLayout:invalidateLayout()
 end
 
-function SiloFilltypeLimitingUISettings:onFrameClose()
-	-- if AutoLightOnOff.settings.isPlayerAutoLight ~= AutoLightOnOff.settings.isPlayerAutoLight_OLD then
-    -- 	AutoLightOnOff.settings.isPlayerAutoLight_OLD = AutoLightOnOff.settings.isPlayerAutoLight
-    --     g_currentMission:showBlinkingWarning(g_i18n:getText("aloo_blink_warn"), 5000)
-    -- end
-end

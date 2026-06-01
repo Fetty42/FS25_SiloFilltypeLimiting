@@ -1,11 +1,9 @@
-<modDesc descVersion="99">
+<modDesc descVersion="109">
 	<author>Fetty42</author>
 	<version>1.0.1.0</version>
 	<title>
 		<de>Silo Fülltyp Begrenzung</de>
         <en>Silo Filltype Limiting</en>
-		<fr>Limitation du type de remplissage du silo</fr>
-		<ru>Ограничение типов наполнения силоса</ru>
     </title>
     <description>
         <de><![CDATA[Mehr Realismus auf deinem Hof: Silo-Fülltyp-Begrenzung
@@ -14,6 +12,10 @@ Doch keine Sorge: Wer clever plant und investiert, kann diese Begrenzung erweite
 Ein weiteres Plus: Die maximale Anzahl der Fülltypen pro Silo und Erweiterung ist direkt in den allgemeinen Spieleinstellungen individuell anpassbar. Passe das System an deinen Spielstil an und bringe deine Hofverwaltung auf ein neues Level!
 
 Funktioniert jetzt auch im Multiplayer!
+
+ChangeLog 1.1.0.0:
+- Kompatibilität für Multiplayer optimiert
+- Über die zentrale Datei modSettings/SiloFilltypeLimiting.xml können jetzt die Anzahl der gleichzeitig erlaubten Fülltypen explizit pro Silotyp bzw. Erweiterungstyp konfiguriert werden. Wenn die Funktionalität in den Optionen aktiviert ist, haben diese explizit konfigurierten Werte Vorrang vor den generellen Spieleinstellungen.
 
 Changelog 1.0.1.0:
 - Bessere Erkennung relevanter Silos (funktioniert jetzt auch für „Hof Bergmann”)
@@ -28,6 +30,10 @@ Another great feature: the maximum number of fill types per silo and extension c
 
 Now also compatible with multiplayer!
 
+ChangeLog 1.1.0.0:
+- Optimized compatibility for multiplayer
+- The number of simultaneously allowed fill types can now be explicitly configured for each silo type and extension type via the central file modSettings/SiloFilltypeLimiting.xml. If the functionality is enabled in the options, these explicitly configured values will take precedence over the general game settings.
+
 Changelog 1.0.1.0:
 - Improved detection of relevant silos (now works with “Hof Bergmann” map)
 - The number of simultaneous fill types for the main silo and each extension can now be configured in the general game settings
@@ -41,6 +47,10 @@ Autre avantage : le nombre maximal de types de remplissage par silo et par exten
 
 Fonctionne désormais aussi en multijoueur!
 
+ChangeLog 1.1.0.0:
+- Compatibilité optimisée pour le multijoueur
+- Le nombre de types de remplissage simultanés peut maintenant être configuré explicitement pour chaque type de silo et d’extension via le fichier central modSettings/SiloFilltypeLimiting.xml. Si la fonctionnalité est activée dans les options, ces valeurs explicitement configurées auront la priorité sur les paramètres généraux du jeu.
+
 Changelog 1.0.1.0:
 - Meilleure détection des silos concernés (fonctionne maintenant aussi avec la carte “Hof Bergmann”)
 - Le nombre de types de remplissage simultanés pour le silo principal et les extensions peut maintenant être configuré dans les paramètres généraux du jeu
@@ -53,6 +63,10 @@ Pour signaler un bug ou faire une suggestion, rends-toi sur: https://github.com/
 Ещё один плюс: максимальное количество типов наполнения для основного силоса и расширений можно индивидуально настроить в общих настройках игры. Настройте систему под свой стиль игры и выведите управление фермой на новый уровень!
 
 Теперь работает и в мультиплеере!
+
+ChangeLog 1.1.0.0:
+- Оптимизирована совместимость для мультиплеера
+- Количество одновременно разрешённых типов наполнения теперь можно явно настроить для каждого типа силоса и расширения через центральный файл modSettings/SiloFilltypeLimiting.xml. Если эта функциональность включена в опциях, эти явно настроенные значения будут иметь приоритет над общими настройками игры.
 
 Changelog 1.0.1.0:
 - Улучшено распознавание соответствующих силосов (теперь также работает с картой «Hof Bergmann»)
