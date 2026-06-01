@@ -4,6 +4,8 @@
 	<title>
 		<de>Silo Fülltyp Begrenzung</de>
         <en>Silo Filltype Limiting</en>
+		<fr>Limitation du type de remplissage du silo</fr>
+		<ru>Ограничение типов наполнения силоса</ru>
     </title>
     <description>
         <de><![CDATA[Mehr Realismus auf deinem Hof: Silo-Fülltyp-Begrenzung
@@ -72,48 +74,65 @@ Changelog 1.0.1.0:
 			<de>Zu viele Fülltypen (%s/%s in Benutzung) --> Entladen ist nicht erlaubt</de>
 			<en>Too many fill types (%s/%s in use) --> Unloading is not allowed</en>
 			<fr>Trop de types de remplissage (%s/%s en usage) --> le déchargement n'est pas autorisé</fr>
-			<ru>Слишком много видов наполнителей (%s/%s в использовании) -> Разгрузка не возможна</ru>
+			<ru>Слишком много видов наполнителей (%s/%s в использовании) --> Разгрузка невозможна</ru>
 		</text>
 		<text name="SiloFilltypeLimiting_ExistingFilltype">
 			<de>Vorhandener Fülltyp (%s/%s in Benutzung)</de>
 			<en>Existing fill type (%s/%s in use)</en>
 			<fr>Type de remplissage existant (%s/%s en usage)</fr>
-			<ru>Существующий тип заполнения (%s/%s в использовании)</ru>
+			<ru>Существующий тип наполнения (%s/%s в использовании)</ru>
 		</text>
 		<text name="SiloFilltypeLimiting_NewFilltype">
 			<de>Neuer Fülltyp (%s/%s in Benutzung)</de>
 			<en>New fill type (%s/%s in use)</en>
 			<fr>Nouveau type de remplissage (%s/%s en usage)</fr>
-			<ru>Новый тип наполнения (%s/%s^в использовании)</ru>
+			<ru>Новый тип наполнения (%s/%s в использовании)</ru>
 		</text>
 		<text name="UISetting_title">
 			<de>Silo Fülltyp Begrenzung</de>
 			<en>Silo Fill type Limiting</en>
 			<fr>Limitation du type de remplissage du silo</fr>
+			<ru>Ограничение типов наполнения силоса</ru>
 		</text>
 
-		<text name="UISetting_maxNoParallelFillTypesPerSilo_short">
+		<text name="UISetting_maxNumParallelFillTypesPerSilo_short">
 			<de>Maximale Anzahl der gleichzeitigen Fülltypen eines Silos</de>
 			<en>Maximum number of simultaneous fill types of a silo</en>
 			<fr>Nombre maximum de types de remplissage simultanés d'un silo</fr>
+			<ru>Максимальное количество одновременно хранимых типов наполнения в силосе</ru>
 		</text>
 
-		<text name="UISetting_maxNoParallelFillTypesPerSilo_long">
+		<text name="UISetting_maxNumParallelFillTypesPerSilo_long">
 			<de>Definiert die maximal erlaubte Anzahl an Fülltypen, die gleichzeitig in ein Silo eingelagert werden können.</de>
 			<en>Defines the maximum allowed number of fill types that can be stored in a silo at the same time.</en>
 			<fr>Définit le nombre maximum autorisé de types de remplissage pouvant être stockés dans un silo en même temps.</fr>
+			<ru>Определяет максимально допустимое количество типов наполнения, которые могут храниться в силосе одновременно.</ru>
 		</text>
 
-		<text name="UISetting_additionalNoParallelFillTypesPerSiloExtension_short">
+		<text name="UISetting_additionalNumParallelFillTypesPerSiloExtension_short">
 			<de>Anzahl der zusätzlichen Fülltypen durch eine Siloerweiterung</de>
 			<en>Number of additional fill types through a silo extension</en>
 			<fr>Nombre de types de remplissage supplémentaires grâce à une extension de silo</fr>
+			<ru>Количество дополнительных типов наполнения через расширение силоса</ru>
 		</text>
 
-		<text name="UISetting_additionalNoParallelFillTypesPerSiloExtension_long">
+		<text name="UISetting_additionalNumParallelFillTypesPerSiloExtension_long">
 			<de>Definiert die Anzahl der Fülltypen, um die eine Siloerweiterung das zugehörige Hauptsilo erweitert.</de>
 			<en>Defines the number of fill types that a silo extension adds to the corresponding main silo.</en>
 			<fr>Définit le nombre de types de remplissage qu'une extension de silo ajoute au silo principal correspondant.</fr>
+			<ru>Определяет количество типов наполнения, которые добавляет расширение силоса к соответствующему основному силосу.</ru>
+		</text>
+		<text name="UISetting_useConfiguredSettingsPerSilo_short">
+			<de>Verwende die pro Silotyp konfigurierte Anzahl an Fülltypen</de>
+			<en>Use the configured number of fill types for each silo type</en>
+			<fr>Utiliser le nombre de types de remplissage configuré pour chaque type de silo</fr>
+			<ru>Использовать настроенное количество типов наполнения для каждого типа силоса</ru>
+		</text>
+		<text name="UISetting_useConfiguredSettingsPerSilo_long">
+			<de>Wenn diese Option aktiviert ist, wird die ggf. explizit für einen Silotyp bzw. Siloerweiterungstyp konfigurierte Anzahl an gleichzeitigen Fülltypen statt der in den generellen Spieleinstellungen konfigurierten Anzahl verwendet. Power-User können diese Werte in der zentralen Datei modSettings/SiloFilltypeLimiting.xml unter knownStorageStations und knownSiloExtensions konfigurieren.</de>
+			<en>If this option is enabled, the number of simultaneous fill types explicitly configured for a silo or silo extension type (if any) will be used instead of the values configured in the general game settings. Power users can configure these values in the central file modSettings/SiloFilltypeLimiting.xml under knownStorageStations and knownSiloExtensions.</en>
+			<fr>Si cette option est activée, le nombre de types de remplissage simultanés explicitement configuré pour un type de silo (le cas échéant) sera utilisé à la place du nombre de types de remplissage simultanés configuré dans les paramètres généraux du jeu. Les utilisateurs avancés peuvent configurer ces valeurs dans le fichier central modSettings/SiloFilltypeLimiting.xml.</fr>
+			<ru>Если эта опция включена, будет использоваться количество одновременно хранимых типов наполнения, явно настроенное для типа силоса (если таковое имеется), вместо количества одновременно хранимых типов наполнения, настроенного в общих настройках игры. Продвинутые пользователи могут настроить эти значения в центральном файле modSettings/SiloFilltypeLimiting.xml.</ru>
 		</text>
 	</l10n>
 </modDesc>
